@@ -18,6 +18,7 @@ class SinaUidRedisSpider(SinaUidSpider):
         return self.redis.sadd('sina_weibo:uid_all_proxy', uid)
 
     def wait_for_collection_saver(self, uid):
+        self.redis.lpush(self.redis_db_name, self.user_url.format(uid=uid))
         return self.redis.lpush('sina_weibo:wait_m_uid_proxy', uid)
 
     def wait_for_collection_remover(self, uid):
@@ -25,23 +26,6 @@ class SinaUidRedisSpider(SinaUidSpider):
 
     def get_wait_for_collection(self):
         return self.redis.lrange('sina_weibo:wait_m_uid_proxy', 0, -1)
-
-    def filter_data(self, data):
-        if data:
-            cards = data.get('cards')
-            for card in cards:
-                if card.get('card_style') is None:
-                    card_group = card.get('card_group')
-                    for cardgr in card_group:
-                        user = cardgr.get('user')
-                        uid = user.get('id')
-                        screen_name = user.get('screen_name')
-                        if self.uid_collection_saver(uid):
-                            self.wait_for_collection_saver(uid)
-                            self.redis.lpush(self.redis_db_name, self.user_url.format(uid=uid))
-                        #print(uid, '   ', screen_name)
-        else:
-            print("ERROR data is None")
 
 
 if __name__ == '__main__':

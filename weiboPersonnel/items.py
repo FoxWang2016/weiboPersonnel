@@ -17,7 +17,7 @@ class WeibopersonnelItem(scrapy.Item):
 class SinaUserItem(scrapy.Item):
     collection = 'users'
     id = scrapy.Field()
-    name = scrapy.Field()
+    name = scrapy.Field()  #名字
     avatar = scrapy.Field()
     cover = scrapy.Field()
     gender = scrapy.Field()

@@ -25,7 +25,15 @@ class WeibospiderSpider(RedisSpider):
         result = json.loads(response.text)
         if result.get('ok'):
             user_info = result.get('data').get('userInfo')
-            self.get_user(user_info)
+            user_item = SinaUserItem()
+            field_map = {'id': 'id', 'name': 'screen_name', 'avatar': 'profile_image_url', 'cover': 'cover_image_phone',
+                         'gender': 'gender', 'description': 'description', 'fans_count': 'followers_count',
+                         'follows_count': 'follow_count', 'weibos_count': 'statuses_count', 'verified': 'verified',
+                         'verified_reason': 'verified_reason', 'verified_type': 'verified_type'}
+
+            for field, attr in field_map.items():
+                user_item[field] = user_info.get(attr)
+            yield user_item
 
             uid = user_info.get('id')
             yield Request(self.follow_url.format(uid=uid, page=1), callback=self.pares_follows, meta={'page': 1,
@@ -98,17 +106,6 @@ class WeibospiderSpider(RedisSpider):
                         for field, attr in field_map.items():
                             weibo_item[field] = mblog.get(attr)
                         yield weibo_item
-
-    def get_user(self, user_info):
-        user_item = SinaUserItem()
-        field_map = {'id': 'id', 'name': 'screen_name', 'avatar': 'profile_image_url', 'cover': 'cover_image_phone',
-                     'gender': 'gender', 'description': 'description', 'fans_count': 'followers_count',
-                     'follows_count': 'follow_count', 'weibos_count': 'statuses_count', 'verified': 'verified',
-                     'verified_reason': 'verified_reason', 'verified_type': 'verified_type'}
-
-        for field, attr in field_map.items():
-            user_item[field] = user_info.get(attr)
-        yield user_item
 
     def add_for_wait_spider_proxy(self, cards_group):
         for card in cards_group:

@@ -100,18 +100,18 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # 指定数据库的主机IP
-REDIS_HOST = "127.0.0.1"
+REDIS_HOST = "132.232.60.239"
 # 指定数据库的端口号
 REDIS_PORT = 7379
 # redis密码
-REDIS_PASSWORD = ''
+REDIS_PASSWORD = {'password': 'ThisIsASecurityRedis', }
 # redis代理池
 REDIS_IP_PROXY_NAME = 'common:ip_proxy'
 # redis 的db号
 REDIS_DB_NUM = 0
 
 #mongo所在主机ip
-MONGO_HOST = "127.0.0.1"
+MONGO_HOST = "132.232.60.239"
 #mongo所在端口号
 MONGO_PORT = 27017
 #mongo数据库句柄

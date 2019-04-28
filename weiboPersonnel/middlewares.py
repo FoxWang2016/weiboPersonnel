@@ -68,7 +68,7 @@ class WeibopersonnelDownloaderMiddleware(object):
         self.user_agents = settings.get('USER_AGENTS')
         self.redis_host = settings.get('REDIS_HOST')
         self.redis_port = settings.get('REDIS_PORT')
-        self.redis_password = settings.get('REDIS_PASSWORD')
+        self.redis_password = settings.get('REDIS_PASSWORD').get('password')
         self.redis_ip_proxy_name = settings.get('REDIS_IP_PROXY_NAME')
         self.redis = redis.Redis(host=self.redis_host, port=self.redis_port, password=self.redis_password)
 

@@ -29,5 +29,6 @@ class SinaUidRedisSpider(SinaUidSpider):
 
 
 if __name__ == '__main__':
-    sinaUidRedisSpider = SinaUidRedisSpider(redis_port='7379')
+    sinaUidRedisSpider = SinaUidRedisSpider(redis_host='132.232.60.239', redis_port='7379'
+                                            , redis_password='ThisIsASecurityRedis')
     sinaUidRedisSpider.spider_main(sinaUidRedisSpider)

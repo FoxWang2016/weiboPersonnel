@@ -16,7 +16,9 @@ class WeibospiderSpider(RedisSpider):
     follow_url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_{uid}&page={page}'
     fans_url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_{uid}&page={page}'
     weibo_url = 'https://m.weibo.cn/api/container/getIndex?type=uid&value={uid}&containerid=107603{uid}'
-    redis = redis.Redis(host=settings['REDIS_HOST'], port=settings['REDIS_PORT'], password=settings['REDIS_PASSWORD'])
+    print(settings['REDIS_PASSWORD'].get('password'))
+    redis = redis.Redis(host=settings['REDIS_HOST'], port=settings['REDIS_PORT'], password=settings['REDIS_PASSWORD']
+                        .get('password'))
 
     # allowed_domains = ['m.weibo.com']
     # start_urls = ['http://m.weibo.com/']
